@@ -60,6 +60,24 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Check Java version
+      run: java -version
+      
+    - name: Check maven version
+      run: mvn -version
+        
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: List target directory
+      run: ls -al target
+
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
